@@ -73,6 +73,7 @@ dependencies {
 
     // RecyclerView
     implementation "androidx.recyclerview:recyclerview:$version_recyclerview"
+    implementation "androidx.paging:paging-runtime-ktx:$version_paging"
 
     // Testing dependencies
     testImplementation 'junit:junit:4.13.2'
