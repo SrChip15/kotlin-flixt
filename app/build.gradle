@@ -60,6 +60,11 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$version_navigation"
     implementation "androidx.navigation:navigation-ui-ktx:$version_navigation"
 
+    // Room database
+    implementation "androidx.room:room-runtime:$version_room"
+    kapt "androidx.room:room-compiler:$version_room"
+    // Kotlin Extensions and Coroutines support for Room
+    implementation "androidx.room:room-ktx:$version_room"
 
     // Moshi
     implementation "com.squareup.moshi:moshi:$version_moshi"
