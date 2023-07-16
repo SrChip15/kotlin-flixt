@@ -1,33 +1,32 @@
 package com.example.flixt.overview
 
+import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
+import com.example.flixt.BuildConfig
 import com.example.flixt.network.Movie
-import com.example.flixt.repository.MovieRepository
-import kotlinx.coroutines.flow.Flow
+import com.example.flixt.network.TmdbApi
+import kotlinx.coroutines.launch
 
-class OverviewViewModel(private val movieRepository: MovieRepository) : ViewModel() {
+class OverviewViewModel: ViewModel() {
 
-    // private val _movies = MutableLiveData<PagingData<Movie>>()
-    //
-    // val movies: LiveData<PagingData<Movie>>
-    //     get() = _movies
+    private val _movies = MutableLiveData<List<Movie>>()
 
-    // init {
-    //     getMoviesFromApi()
-    // }
 
-    private fun getMoviesFromApi(): Flow<PagingData<Movie>> =
-        movieRepository.getMovies().cachedIn(viewModelScope)
+    val movies: LiveData<List<Movie>>
+        get() = _movies
 
-    sealed class UiAction {
-        data class Scroll(
-            val visibleItemCount: Int,
-            val lastVisibleItemPosition: Int,
-            val totalItemCount: Int,
-        ) : UiAction()
+    init {
+        getMoviesFromApi()
+    }
+
+    private fun getMoviesFromApi() {
+        viewModelScope.launch {
+            val response = TmdbApi.retrofitService.getMovies(BuildConfig.API_KEY, 1)
+            Log.i("OverviewVM", "response: $response")
+            _movies.value = response.results
+        }
     }
 }
