@@ -1,10 +1,8 @@
 package com.example.flixt.repository
 
-import androidx.lifecycle.LiveData
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import androidx.paging.liveData
 import com.example.flixt.BuildConfig
 import com.example.flixt.data.database.MovieDatabase
 import com.example.flixt.data.paging.MoviePagingSource
@@ -12,6 +10,7 @@ import com.example.flixt.domain.Movie
 import com.example.flixt.network.TmdbApiService
 import com.example.flixt.network.asDatabaseModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 
 class MoviesRepository(
@@ -28,13 +27,13 @@ class MoviesRepository(
         }
     }
 
-    fun getMoviesStream(): LiveData<PagingData<Movie>> {
+    fun getMoviesStream(): Flow<PagingData<Movie>> {
         return Pager(
             config = PagingConfig(
                 pageSize = 20,
                 enablePlaceholders = false
             ),
             pagingSourceFactory = { MoviePagingSource(service) }
-        ).liveData
+        ).flow
     }
 }
