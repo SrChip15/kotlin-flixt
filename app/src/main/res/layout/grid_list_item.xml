@@ -6,7 +6,7 @@
 
         <variable
             name="movie"
-            type="com.example.flixt.network.Movie" />
+            type="com.example.flixt.domain.Movie" />
     </data>
 
     <ImageView
@@ -16,6 +16,7 @@
         android:adjustViewBounds="true"
         android:padding="2dp"
         android:scaleType="centerCrop"
-        app:imgUrl="@{movie.posterPath}"
+        app:imgUrl="@{movie}"
+        tools:ignore="ContentDescription"
         tools:src="@tools:sample/backgrounds/scenic" />
 </layout>

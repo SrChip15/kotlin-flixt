@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.flixt.databinding.GridListItemBinding
-import com.example.flixt.network.Movie
+import com.example.flixt.domain.Movie
 
 class MovieGridAdapter : ListAdapter<Movie, MovieGridAdapter.MoviePosterHolder>(MovieListDiffCallback) {
     class MoviePosterHolder private constructor(private val binding: GridListItemBinding) :
