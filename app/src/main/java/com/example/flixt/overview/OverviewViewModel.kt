@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.flixt.database.getDatabase
+import com.example.flixt.data.database.getDatabase
 import com.example.flixt.repository.MoviesRepository
 import kotlinx.coroutines.launch
 import com.example.flixt.network.TmdbApi
