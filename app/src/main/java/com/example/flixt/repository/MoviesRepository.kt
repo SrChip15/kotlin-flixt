@@ -3,8 +3,8 @@ package com.example.flixt.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import com.example.flixt.BuildConfig
-import com.example.flixt.database.MovieDatabase
-import com.example.flixt.database.asDomainModel
+import com.example.flixt.data.database.MovieDatabase
+import com.example.flixt.data.database.asDomainModel
 import com.example.flixt.domain.Movie
 import com.example.flixt.network.TmdbApiService
 import com.example.flixt.network.asDatabaseModel

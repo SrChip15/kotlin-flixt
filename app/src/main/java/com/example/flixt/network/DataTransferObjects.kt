@@ -1,7 +1,7 @@
 package com.example.flixt.network
 
 import android.os.Parcelable
-import com.example.flixt.database.DatabaseMovie
+import com.example.flixt.data.database.DatabaseMovie
 import com.squareup.moshi.Json
 import kotlinx.parcelize.Parcelize
 

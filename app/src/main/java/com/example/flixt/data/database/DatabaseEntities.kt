@@ -1,4 +1,4 @@
-package com.example.flixt.database
+package com.example.flixt.data.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

@@ -1,4 +1,4 @@
-package com.example.flixt.database
+package com.example.flixt.data.database
 
 import android.content.Context
 import androidx.lifecycle.LiveData
