@@ -39,7 +39,7 @@ fun List<NetworkMovie>.asDomainModel(): List<Movie> {
     }
 }
 
-fun List<NetworkMovie>.asDatabaseModel(): Array<DatabaseMovie> {
+fun List<NetworkMovie>.asDatabaseModel(): List<DatabaseMovie> {
     return map {
         DatabaseMovie(
             id = it.id,
@@ -54,5 +54,5 @@ fun List<NetworkMovie>.asDatabaseModel(): Array<DatabaseMovie> {
             originalTitle = it.originalTitle,
             posterPath = it.posterPath,
         )
-    }.toTypedArray()
+    }
 }

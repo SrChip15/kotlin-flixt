@@ -23,7 +23,7 @@ class MoviesRepository(
     suspend fun refreshMovies() {
         withContext(Dispatchers.IO) {
             val response = service.getMovies(BuildConfig.API_KEY, 1)
-            database.movieDao.insertAll(*response.movies.asDatabaseModel())
+            database.movieDao.insertAll(response.movies.asDatabaseModel())
         }
     }
 

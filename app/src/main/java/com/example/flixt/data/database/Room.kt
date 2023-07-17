@@ -1,7 +1,7 @@
 package com.example.flixt.data.database
 
 import android.content.Context
-import androidx.lifecycle.LiveData
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Database
 import androidx.room.Insert
@@ -13,28 +13,30 @@ import androidx.room.RoomDatabase
 
 @Dao
 interface MovieDao {
-    @Query("SELECT * FROM DatabaseMovie ORDER BY releaseDate DESC")
-    fun getMovies(): LiveData<List<DatabaseMovie>>
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(vararg movies: DatabaseMovie)
+    suspend fun insertAll(movies: List<DatabaseMovie>)
+
+    @Query("SELECT * FROM DatabaseMovie ORDER BY releaseDate DESC")
+    fun getMovies(): PagingSource<Int, DatabaseMovie>
+
+    @Query("DELETE FROM DatabaseMovie")
+    suspend fun clearMovies()
 }
 
 @Database(entities = [DatabaseMovie::class], version = 1)
-abstract class MovieDatabase: RoomDatabase() {
+abstract class MovieDatabase : RoomDatabase() {
     abstract val movieDao: MovieDao
-}
 
-private lateinit var INSTANCE: MovieDatabase
+    companion object {
 
-fun getDatabase(context: Context): MovieDatabase {
-    if(!::INSTANCE.isInitialized) {
-        synchronized(MovieDatabase::class.java) {
-            INSTANCE = Room
-                .databaseBuilder(context, MovieDatabase::class.java, "movies")
-                .build()
+        @Volatile
+        private var INSTANCE: MovieDatabase? = null
+
+        fun getInstance(context: Context) = INSTANCE ?: synchronized(this) {
+            INSTANCE ?: buildDatabase(context).also { INSTANCE = it }
         }
-    }
 
-    return INSTANCE
+        private fun buildDatabase(context: Context) =
+            Room.databaseBuilder(context, MovieDatabase::class.java, "movies").build()
+    }
 }
