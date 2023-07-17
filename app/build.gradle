@@ -65,7 +65,7 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version_coroutines"
 
     // Paging
-    implementation "androidx.paging:paging-runtime:$version_paging"
+    implementation "androidx.paging:paging-runtime-ktx:$version_paging"
 
     // Room database
     implementation "androidx.room:room-runtime:$version_room"
