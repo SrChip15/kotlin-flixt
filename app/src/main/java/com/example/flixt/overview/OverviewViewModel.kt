@@ -23,7 +23,7 @@ class OverviewViewModel(application: Application): ViewModel() {
 
     val movies = repository.movies
 
-    class Factory(val app: Application): ViewModelProvider.Factory {
+    class Factory(private val app: Application): ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(OverviewViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
