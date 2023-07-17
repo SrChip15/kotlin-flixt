@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.example.flixt.databinding.FragmentOverviewBinding
+import kotlinx.coroutines.launch
 
 class OverviewFragment : Fragment() {
 
@@ -26,11 +28,19 @@ class OverviewFragment : Fragment() {
 
         val binding = FragmentOverviewBinding.inflate(inflater)
 
-        binding.movieList.adapter = MovieGridAdapter()
+        val movieGridAdapter = MovieGridAdapter()
+
+        binding.movieList.adapter = movieGridAdapter
         binding.movieList.setHasFixedSize(true)
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.overviewViewModel = viewModel
+
+        viewModel.movies.observe(viewLifecycleOwner) {
+            lifecycleScope.launch {
+                movieGridAdapter.submitData(it)
+            }
+        }
 
         return binding.root
     }
