@@ -2,13 +2,14 @@ package com.example.flixt.overview
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.flixt.databinding.GridListItemBinding
 import com.example.flixt.domain.Movie
 
-class MovieGridAdapter : ListAdapter<Movie, MovieGridAdapter.MoviePosterHolder>(MovieListDiffCallback) {
+class MovieGridAdapter :
+    PagingDataAdapter<Movie, MovieGridAdapter.MoviePosterHolder>(MovieListDiffCallback) {
     class MoviePosterHolder private constructor(private val binding: GridListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
@@ -42,7 +43,7 @@ class MovieGridAdapter : ListAdapter<Movie, MovieGridAdapter.MoviePosterHolder>(
     }
 
     override fun onBindViewHolder(holder: MoviePosterHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position)!!)
     }
 
 }
