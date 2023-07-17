@@ -1,32 +1,34 @@
 package com.example.flixt.overview
 
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import android.app.Application
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.flixt.BuildConfig
-import com.example.flixt.network.Movie
-import com.example.flixt.network.TmdbApi
+import com.example.flixt.database.getDatabase
+import com.example.flixt.repository.MoviesRepository
 import kotlinx.coroutines.launch
 
-class OverviewViewModel: ViewModel() {
+class OverviewViewModel(application: Application): ViewModel() {
 
-    private val _movies = MutableLiveData<List<Movie>>()
-
-
-    val movies: LiveData<List<Movie>>
-        get() = _movies
+    private val database = getDatabase(application)
+    private val repository = MoviesRepository(database)
 
     init {
-        getMoviesFromApi()
+        viewModelScope.launch {
+            repository.refreshMovies()
+        }
     }
 
-    private fun getMoviesFromApi() {
-        viewModelScope.launch {
-            val response = TmdbApi.retrofitService.getMovies(BuildConfig.API_KEY, 1)
-            Log.i("OverviewVM", "response: $response")
-            _movies.value = response.results
+    val movies = repository.movies
+
+    class Factory(val app: Application): ViewModelProvider.Factory {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            if (modelClass.isAssignableFrom(OverviewViewModel::class.java)) {
+                @Suppress("UNCHECKED_CAST")
+                return OverviewViewModel(app) as T
+            }
+
+            throw IllegalArgumentException("Unable to construct viewmodel")
         }
     }
 }
