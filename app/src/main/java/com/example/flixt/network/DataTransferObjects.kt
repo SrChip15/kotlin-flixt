@@ -6,7 +6,7 @@ import com.squareup.moshi.Json
 import kotlinx.parcelize.Parcelize
 
 data class DiscoverResponse(
-    val results: List<NetworkMovie>,
+    @Json(name = "results") val movies: List<NetworkMovie>,
     val page: Int,
     @Json(name = "total_results") val totalResults: Int,
     @Json(name = "total_pages") val totalPages: Int,
