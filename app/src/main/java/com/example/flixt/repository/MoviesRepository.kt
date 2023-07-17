@@ -1,14 +1,12 @@
 package com.example.flixt.repository
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.map
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.liveData
 import com.example.flixt.BuildConfig
 import com.example.flixt.data.database.MovieDatabase
-import com.example.flixt.data.database.asDomainModel
 import com.example.flixt.data.paging.MoviePagingSource
 import com.example.flixt.domain.Movie
 import com.example.flixt.network.TmdbApiService
@@ -21,9 +19,7 @@ class MoviesRepository(
     private val database: MovieDatabase
 ) {
 
-    val movies: LiveData<List<Movie>> = database.movieDao.getMovies().map {
-        it.asDomainModel()
-    }
+    // TODO: Use RemoteMediator
 
     suspend fun refreshMovies() {
         withContext(Dispatchers.IO) {
@@ -32,7 +28,7 @@ class MoviesRepository(
         }
     }
 
-    fun getMoviesStream(page: Int): LiveData<PagingData<Movie>> {
+    fun getMoviesStream(): LiveData<PagingData<Movie>> {
         return Pager(
             config = PagingConfig(
                 pageSize = 20,
