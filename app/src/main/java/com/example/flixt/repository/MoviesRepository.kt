@@ -19,8 +19,8 @@ class MoviesRepository(private val database: MovieDatabase) {
 
     suspend fun refreshMovies() {
         withContext(Dispatchers.IO) {
-            val movies = TmdbApi.retrofitService.getMovies(BuildConfig.API_KEY, 1)
-            database.movieDao.insertAll(*movies.results.asDatabaseModel())
+            val response = TmdbApi.retrofitService.getMovies(BuildConfig.API_KEY, 1)
+            database.movieDao.insertAll(*response.movies.asDatabaseModel())
         }
     }
 }
