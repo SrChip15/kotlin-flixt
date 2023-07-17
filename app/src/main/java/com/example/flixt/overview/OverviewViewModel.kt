@@ -23,7 +23,6 @@ class OverviewViewModel(application: Application) : ViewModel() {
     }
 
     val movies = repository.getMoviesStream().cachedIn(viewModelScope)
-    // TODO: Use flows
 
     class Factory(private val app: Application) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
