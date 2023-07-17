@@ -2,6 +2,7 @@ package com.example.flixt.network
 
 import android.os.Parcelable
 import com.example.flixt.data.database.DatabaseMovie
+import com.example.flixt.domain.Movie
 import com.squareup.moshi.Json
 import kotlinx.parcelize.Parcelize
 
@@ -26,6 +27,17 @@ data class NetworkMovie(
     val overview: String,
     @Json(name = "release_date") val releaseDate: String,
 ) : Parcelable
+
+fun List<NetworkMovie>.asDomainModel(): List<Movie> {
+    return map {
+        Movie(
+            id = it.id,
+            title = it.title,
+            posterPath = it.posterPath,
+            overview = it.overview,
+        )
+    }
+}
 
 fun List<NetworkMovie>.asDatabaseModel(): Array<DatabaseMovie> {
     return map {
