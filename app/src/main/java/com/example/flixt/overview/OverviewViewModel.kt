@@ -7,11 +7,13 @@ import androidx.lifecycle.viewModelScope
 import com.example.flixt.database.getDatabase
 import com.example.flixt.repository.MoviesRepository
 import kotlinx.coroutines.launch
+import com.example.flixt.network.TmdbApi
 
 class OverviewViewModel(application: Application): ViewModel() {
 
+    private val service = TmdbApi.retrofitService
     private val database = getDatabase(application)
-    private val repository = MoviesRepository(database)
+    private val repository = MoviesRepository(service, database)
 
     init {
         viewModelScope.launch {
