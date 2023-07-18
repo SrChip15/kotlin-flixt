@@ -23,9 +23,23 @@ interface MovieDao {
     suspend fun clearMovies()
 }
 
-@Database(entities = [DatabaseMovie::class], version = 1)
+@Dao
+interface RemoteKeysDao {
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(remoteKeys: List<RemoteKeys>)
+
+    @Query("SELECT * FROM RemoteKeys WHERE movieId = :movieId")
+    suspend fun remoteKeysMovieId(movieId: Int): RemoteKeys?
+
+    @Query("DELETE FROM RemoteKeys")
+    suspend fun clearRemoteKeys()
+}
+
+@Database(entities = [DatabaseMovie::class, RemoteKeys::class], version = 1)
 abstract class MovieDatabase : RoomDatabase() {
-    abstract val movieDao: MovieDao
+    abstract fun movieDao(): MovieDao
+    abstract fun remoteKeysDao(): RemoteKeysDao
 
     companion object {
 
@@ -37,6 +51,7 @@ abstract class MovieDatabase : RoomDatabase() {
         }
 
         private fun buildDatabase(context: Context) =
-            Room.databaseBuilder(context, MovieDatabase::class.java, "movies").build()
+            Room.databaseBuilder(context, MovieDatabase::class.java, "flixt")
+                .fallbackToDestructiveMigration().build()
     }
 }

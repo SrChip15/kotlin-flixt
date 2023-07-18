@@ -20,6 +20,14 @@ data class DatabaseMovie constructor(
     val posterPath: String,
 )
 
+@Entity
+data class RemoteKeys(
+    @PrimaryKey
+    val movieId: Int,
+    val prevKey: Int?,
+    val nextKey: Int?,
+)
+
 fun List<DatabaseMovie>.asDomainModel(): List<Movie> {
     return map {
         Movie(
@@ -29,4 +37,13 @@ fun List<DatabaseMovie>.asDomainModel(): List<Movie> {
             overview = it.overview,
         )
     }
+}
+
+fun DatabaseMovie.asDomainModel(): Movie {
+    return Movie(
+        id = id,
+        title = title,
+        posterPath = posterPath,
+        overview = overview,
+    )
 }

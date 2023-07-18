@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.map
+import com.example.flixt.data.database.asDomainModel
 import com.example.flixt.databinding.FragmentOverviewBinding
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -38,8 +40,8 @@ class OverviewFragment : Fragment() {
         binding.overviewViewModel = viewModel
 
         lifecycleScope.launch {
-            viewModel.movies.collectLatest {
-                movieGridAdapter.submitData(it)
+            viewModel.movies.collectLatest { pagingData ->
+                movieGridAdapter.submitData(pagingData.map { it.asDomainModel() })
             }
         }
 
