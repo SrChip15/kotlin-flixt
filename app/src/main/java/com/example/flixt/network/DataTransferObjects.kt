@@ -23,7 +23,7 @@ data class NetworkMovie(
     val popularity: Double,
     @Json(name = "poster_path") val posterPath: String,
     @Json(name = "original_title") val originalTitle: String,
-    @Json(name = "backdrop_path") val backdropPath: String,
+    @Json(name = "backdrop_path") val backdropPath: String?,
     val overview: String,
     @Json(name = "release_date") val releaseDate: String,
 ) : Parcelable
