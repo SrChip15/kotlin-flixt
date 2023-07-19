@@ -1,5 +1,6 @@
 package com.example.flixt.data
 
+import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
@@ -29,11 +30,13 @@ class MovieRemoteMediator(
 
         val page = when (loadType) {
             LoadType.REFRESH -> {
+                Log.i("MovieRemoteMediator", "Refresh triggered")
                 val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
                 remoteKeys?.nextKey?.minus(1) ?: STARTING_PAGE
             }
 
             LoadType.PREPEND -> {
+                Log.i("MovieRemoteMediator", "Prepend triggered")
                 val remoteKeys = getRemoteKeyForFirstItem(state)
                 // If remoteKeys is null, that means the refresh result is not in the database yet.
                 val prevKey = remoteKeys?.prevKey
@@ -42,7 +45,9 @@ class MovieRemoteMediator(
             }
 
             LoadType.APPEND -> {
+                Log.i("MovieRemoteMediator", "Append triggered")
                 val remoteKeys = getRemoteKeyForLastItem(state)
+                Log.i("MovieRemoteMediator", "remoteKeys: $remoteKeys")
                 // If remoteKeys is null, that means the refresh result is not in the database yet.
                 // We can return Success with endOfPaginationReached = false because Paging
                 // will call this method again if RemoteKeys becomes non-null.
@@ -55,6 +60,7 @@ class MovieRemoteMediator(
         }
 
         return try {
+            Log.i("MovieRemoteMediator", "page: $page")
             val response = service.getMovies(BuildConfig.API_KEY, page)
             val movies = response.movies
             val endOfPaginationReached = movies.isEmpty()
@@ -71,6 +77,8 @@ class MovieRemoteMediator(
                     RemoteKeys(movieId = movie.id, prevKey = prevKey, nextKey = nextKey)
                 }
                 database.remoteKeysDao().insertAll(keys)
+                Log.i("MovieRemoteMediator", "movies: ${movies.size}")
+                movies.map { Log.i("MovieRemoteMediator", "${it.title}#${it.id}") }
                 database.movieDao().insertAll(movies.asDatabaseModel())
             }
 
@@ -97,6 +105,10 @@ class MovieRemoteMediator(
     }
 
     private suspend fun getRemoteKeyForLastItem(state: PagingState<Int, DatabaseMovie>): RemoteKeys? {
+        Log.i(
+            "MovieRemoteMediator",
+            "getRemoteKeyForLastItem: ${state.pages.lastOrNull()?.data?.lastOrNull()}"
+        )
         return state.pages.lastOrNull { it.data.isNotEmpty() }?.data?.lastOrNull()?.let { movie ->
             database.remoteKeysDao().remoteKeysMovieId(movie.id)
         }
