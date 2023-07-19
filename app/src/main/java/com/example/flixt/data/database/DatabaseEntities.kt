@@ -10,7 +10,7 @@ data class DatabaseMovie constructor(
     val id: Int,
     val title: String,
     val overview: String,
-    val backdropPath: String,
+    val backdropPath: String?,
     val releaseDate: String,
     val video: Boolean,
     val popularity: Double,
