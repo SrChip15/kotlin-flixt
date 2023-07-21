@@ -9,6 +9,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.flixt.util.Constants.DATABASE_NAME
 
 
 @Dao
@@ -21,17 +22,17 @@ interface MovieDao {
 }
 
 @Database(entities = [DatabaseMovie::class], version = 2)
-abstract class MovieDatabase: RoomDatabase() {
+abstract class MovieDatabase : RoomDatabase() {
     abstract val movieDao: MovieDao
 }
 
 private lateinit var INSTANCE: MovieDatabase
 
 fun getDatabase(context: Context): MovieDatabase {
-    if(!::INSTANCE.isInitialized) {
+    if (!::INSTANCE.isInitialized) {
         synchronized(MovieDatabase::class.java) {
             INSTANCE = Room
-                .databaseBuilder(context, MovieDatabase::class.java, "movies")
+                .databaseBuilder(context, MovieDatabase::class.java, DATABASE_NAME)
                 .fallbackToDestructiveMigration()
                 .build()
         }
