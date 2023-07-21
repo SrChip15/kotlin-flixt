@@ -8,6 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.flixt.databinding.GridListItemBinding
 import com.example.flixt.domain.Movie
 
+/**
+ * Adapter for displaying [Movie] [List]. [PagingDataAdapter] presents `PagingData` in a
+ * [RecyclerView]. The adapter can be connected to a `Flow`, a `LiveData`, an RxJava `Flowable`,
+ * an RxJava `Observable`, or even a static list using factory methods. It listens to internal
+ * `PagingData` loading events and efficiently updates the UI as pages are loaded.
+ */
 class MovieGridAdapter :
     PagingDataAdapter<Movie, MovieGridAdapter.MoviePosterHolder>(MovieListDiffCallback) {
     class MoviePosterHolder private constructor(private val binding: GridListItemBinding) :

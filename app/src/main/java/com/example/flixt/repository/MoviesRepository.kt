@@ -18,6 +18,8 @@ class MoviesRepository(
     // TODO: Use RemoteMediator
 
     fun getMoviesStream(): Flow<PagingData<Movie>> {
+        // Pager is the class responsible for producing the PagingData stream.
+        // It depends on the PagingSource to do this.
         return Pager(
             config = PagingConfig(
                 pageSize = 20,
