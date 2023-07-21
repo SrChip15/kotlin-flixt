@@ -14,11 +14,7 @@ import kotlinx.coroutines.launch
 class OverviewFragment : Fragment() {
 
     private val viewModel: OverviewViewModel by lazy {
-        val activity = requireNotNull(this.activity) {
-            "ViewModel cannot be accessed before fragment is created"
-        }
-        val factory = OverviewViewModel.Factory(activity.application)
-        ViewModelProvider(this, factory)[OverviewViewModel::class.java]
+        ViewModelProvider(this)[OverviewViewModel::class.java]
     }
 
     override fun onCreateView(
