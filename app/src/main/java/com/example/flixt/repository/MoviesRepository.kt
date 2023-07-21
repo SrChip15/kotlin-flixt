@@ -4,14 +4,17 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import androidx.paging.map
 import com.example.flixt.BuildConfig
 import com.example.flixt.data.MovieRemoteMediator
-import com.example.flixt.data.database.DatabaseMovie
 import com.example.flixt.data.database.MovieDatabase
+import com.example.flixt.data.database.asDomainModel
+import com.example.flixt.domain.Movie
 import com.example.flixt.network.TmdbApiService
 import com.example.flixt.network.asDatabaseModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
 class MoviesRepository(
@@ -29,7 +32,7 @@ class MoviesRepository(
         }
     }
 
-    fun getMoviesStream(): Flow<PagingData<DatabaseMovie>> {
+    fun getMoviesStream(): Flow<PagingData<Movie>> {
         @OptIn(ExperimentalPagingApi::class)
         return Pager(
             config = PagingConfig(
@@ -41,6 +44,11 @@ class MoviesRepository(
                 database,
             ),
             pagingSourceFactory = pagingSourceFactory
-        ).flow
+        )
+            .flow
+            .map { pagingData ->
+                pagingData.map { it.asDomainModel() }
+            }
+
     }
 }

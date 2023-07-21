@@ -3,6 +3,7 @@ package com.example.flixt.overview
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.example.flixt.data.database.MovieDatabase
@@ -15,7 +16,7 @@ class OverviewViewModel(application: Application) : ViewModel() {
     private val database = MovieDatabase.getInstance(application)
     private val repository = MoviesRepository(service, database)
 
-    val movies = repository.getMoviesStream().cachedIn(viewModelScope)
+    val movies = repository.getMoviesStream().asLiveData().cachedIn(viewModelScope)
 
     class Factory(private val app: Application) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
