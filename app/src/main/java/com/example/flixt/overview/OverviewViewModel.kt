@@ -1,34 +1,19 @@
 package com.example.flixt.overview
 
-import android.app.Application
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.flixt.database.getDatabase
+import androidx.paging.cachedIn
+import com.example.flixt.network.TmdbApi
 import com.example.flixt.repository.MoviesRepository
-import kotlinx.coroutines.launch
 
-class OverviewViewModel(application: Application): ViewModel() {
+class OverviewViewModel : ViewModel() {
 
-    private val database = getDatabase(application)
-    private val repository = MoviesRepository(database)
+    private val service = TmdbApi.retrofitService
+    private val repository = MoviesRepository(service)
 
-    init {
-        viewModelScope.launch {
-            repository.refreshMovies()
-        }
-    }
-
-    val movies = repository.movies
-
-    class Factory(val app: Application): ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(OverviewViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return OverviewViewModel(app) as T
-            }
-
-            throw IllegalArgumentException("Unable to construct viewmodel")
-        }
-    }
+    // cachedIn allows the paged data to remain active in the viewModel scope
+    // so, even if the UI were to go through lifecycle changes, the paged data would remain in cache
+    // and the UI does not have to start paging from the beginning when it resumes
+    val movies = repository.getMoviesStream().asLiveData().cachedIn(viewModelScope)
 }

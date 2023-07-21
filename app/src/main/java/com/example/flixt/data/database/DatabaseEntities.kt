@@ -1,16 +1,16 @@
-package com.example.flixt.database
+package com.example.flixt.data.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.flixt.domain.Movie
 
-@Entity
+@Entity(tableName = "movies")
 data class DatabaseMovie constructor(
     @PrimaryKey
     val id: Int,
     val title: String,
     val overview: String,
-    val backdropPath: String,
+    val backdropPath: String?,
     val releaseDate: String,
     val video: Boolean,
     val popularity: Double,
