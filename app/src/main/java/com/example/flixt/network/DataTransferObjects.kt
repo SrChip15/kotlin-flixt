@@ -28,6 +28,15 @@ data class NetworkMovie(
     @Json(name = "release_date") val releaseDate: String,
 ) : Parcelable
 
+fun NetworkMovie.asDomainModel(): Movie {
+    return Movie(
+        id = id,
+        title = title,
+        posterPath = posterPath,
+        overview = overview,
+    )
+}
+
 fun List<NetworkMovie>.asDomainModel(): List<Movie> {
     return map {
         Movie(
