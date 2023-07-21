@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.flixt.domain.Movie
 
-@Entity
+@Entity(tableName = "movies")
 data class DatabaseMovie constructor(
     @PrimaryKey
     val id: Int,
@@ -20,7 +20,7 @@ data class DatabaseMovie constructor(
     val posterPath: String,
 )
 
-@Entity
+@Entity(tableName = "remote_keys")
 data class RemoteKeys(
     @PrimaryKey
     val movieId: Int,
