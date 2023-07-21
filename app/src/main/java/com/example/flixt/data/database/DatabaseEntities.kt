@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.flixt.domain.Movie
 
-@Entity
+@Entity(tableName = "movies")
 data class DatabaseMovie constructor(
     @PrimaryKey
     val id: Int,

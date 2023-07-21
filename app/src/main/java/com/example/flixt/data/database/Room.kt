@@ -13,14 +13,14 @@ import androidx.room.RoomDatabase
 
 @Dao
 interface MovieDao {
-    @Query("SELECT * FROM DatabaseMovie ORDER BY releaseDate DESC")
+    @Query("SELECT * FROM movies ORDER BY releaseDate DESC")
     fun getMovies(): LiveData<List<DatabaseMovie>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(vararg movies: DatabaseMovie)
 }
 
-@Database(entities = [DatabaseMovie::class], version = 1)
+@Database(entities = [DatabaseMovie::class], version = 2)
 abstract class MovieDatabase: RoomDatabase() {
     abstract val movieDao: MovieDao
 }
@@ -32,6 +32,7 @@ fun getDatabase(context: Context): MovieDatabase {
         synchronized(MovieDatabase::class.java) {
             INSTANCE = Room
                 .databaseBuilder(context, MovieDatabase::class.java, "movies")
+                .fallbackToDestructiveMigration()
                 .build()
         }
     }
