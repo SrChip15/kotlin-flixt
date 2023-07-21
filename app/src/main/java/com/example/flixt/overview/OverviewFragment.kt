@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.flixt.databinding.FragmentOverviewBinding
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class OverviewFragment : Fragment() {
@@ -33,8 +32,8 @@ class OverviewFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.overviewViewModel = viewModel
 
-        lifecycleScope.launch {
-            viewModel.movies.collectLatest {
+        viewModel.movies.observe(viewLifecycleOwner) {
+            lifecycleScope.launch {
                 movieGridAdapter.submitData(it)
             }
         }
