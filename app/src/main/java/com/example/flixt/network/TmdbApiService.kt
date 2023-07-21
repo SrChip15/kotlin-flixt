@@ -21,9 +21,11 @@ private val retrofit = Retrofit.Builder()
 
 
 interface TmdbApiService {
+    //TODO: Add authorization to client
     @GET("discover/movie")
     suspend fun getMovies(@Query("api_key") apiKey: String, @Query("page") page: Int): DiscoverResponse
 
+    // TODO: Move to constants file
     companion object {
         const val BASE_URL = "https://api.themoviedb.org/3/"
         const val POSTER_IMAGE_BASE_URL = "http://image.tmdb.org/t/p/"
