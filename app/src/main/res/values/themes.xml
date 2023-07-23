@@ -3,6 +3,14 @@
     <style name="Base.Theme.FlixT" parent="Theme.Material3.DayNight">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <!-- Primary color theme for the app -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+
+        <!-- Darker version of the primary color used for action bars and such -->
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+
+        <!-- Accent color used in certain view components like floating action buttons -->
+        <item name="colorAccent">@color/colorAccent</item>
     </style>
 
     <style name="Theme.FlixT" parent="Base.Theme.FlixT" />
