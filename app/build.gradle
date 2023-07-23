@@ -54,7 +54,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
     // CardView
-    implementation("androidx.cardview:cardview:1.0.0")
+    implementation "androidx.cardview:cardview:$version_cardview"
 
     // ViewModel and LiveData
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$version_lifecycle"
@@ -83,8 +83,8 @@ dependencies {
     // Retrofit with Moshi
     implementation "com.squareup.retrofit2:converter-moshi:$version_retrofit"
 
-    // Glide
-    implementation "com.github.bumptech.glide:glide:4.15.1"
+    // Picasso
+    implementation "com.squareup.picasso:picasso:$version_picasso"
 
     // RecyclerView
     implementation "androidx.recyclerview:recyclerview:$version_recyclerview"
