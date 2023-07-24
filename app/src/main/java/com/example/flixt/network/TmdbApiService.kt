@@ -1,7 +1,7 @@
 package com.example.flixt.network
 
 import com.example.flixt.BuildConfig
-import com.example.flixt.network.TmdbApiService.Companion.BASE_URL
+import com.example.flixt.util.Constants.BASE_URL
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
@@ -28,12 +28,6 @@ interface TmdbApiService {
     suspend fun getMovies(
         @Query("page") page: Int
     ): DiscoverResponse
-
-    companion object {
-        const val BASE_URL = "https://api.themoviedb.org/3/"
-        const val POSTER_IMAGE_BASE_URL = "http://image.tmdb.org/t/p/"
-        const val POSTER_IMAGE_SIZE = "w300"
-    }
 }
 
 

@@ -4,8 +4,8 @@ import android.widget.ImageView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import com.example.flixt.domain.Movie
-import com.example.flixt.network.TmdbApiService.Companion.POSTER_IMAGE_BASE_URL
-import com.example.flixt.network.TmdbApiService.Companion.POSTER_IMAGE_SIZE
+import com.example.flixt.util.Constants.POSTER_IMAGE_BASE_URL
+import com.example.flixt.util.Constants.POSTER_IMAGE_SIZE
 import com.squareup.picasso.Picasso
 
 
