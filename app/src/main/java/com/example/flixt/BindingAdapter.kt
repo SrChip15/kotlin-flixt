@@ -20,6 +20,8 @@ fun bindMoviePoster(imgView: ImageView, movie: Movie) {
                 .build()
         Picasso.with(imgView.context)
             .load(imgUri)
+            .placeholder(R.drawable.movie_placeholder)
+            .error(R.drawable.movie_error)
             .into(imgView)
 
         imgView.contentDescription = contentDescription
