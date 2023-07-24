@@ -26,4 +26,5 @@ ext {
     version_paging = "3.1.1"
     version_coroutines = "1.7.1"
     version_cardview = "1.0.0"
+    version_okhttp = "4.11.0"
 }

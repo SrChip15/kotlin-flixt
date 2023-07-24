@@ -53,6 +53,9 @@ dependencies {
     implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
+    // Http Logging
+    implementation "com.squareup.okhttp3:logging-interceptor:$version_okhttp"
+
     // CardView
     implementation "androidx.cardview:cardview:$version_cardview"
 
